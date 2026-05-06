@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sutra</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="brand">
+        <h1>Sutra</h1>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item active">Dashboard</li>
+        <li class="nav-item">Calendar</li>
+        <li class="nav-item">Events</li>
+      </ul>
+
+      <div class="footer">
+        <div class="user-name">Ashutosh</div>
+
+        <div class="settings">Settings</div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+      <!-- HEADER -->
+      <header class="content-header">
+        <h2 class="page-title">Dashboard Overview</h2>
+        <button class="action-btn" id="add-event-btn">Add Event</button>
+      </header>
+
+      <div class="page-content">
+
+        <!-- DASHBOARD -->
+        <div id="dashboard-container">
+          <div class="stat-grid">
+
+            <div class="stat-block">
+              <div class="stat-label">Total Events</div>
+              <div class="stat-value" id="stat-total">0</div>
+            </div>
+
+            <div class="stat-block">
+              <div class="stat-label">Hackathons</div>
+              <div class="stat-value" id="stat-hackathons">0</div>
+            </div>
+
+            <div class="stat-block">
+              <div class="stat-label">Absent Days</div>
+              <div class="stat-value" id="stat-absent">0</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- EVENT LIST FILTERS -->
+        <div class="list-filters" id="list-filters">
+          <div class="filter-group">
+            <span class="filter-label">Type</span>
+            <span class="filter-option active" data-filter-type="all">All</span>
+            <span class="filter-option" data-filter-type="hackathon">Hackathon</span>
+            <span class="filter-option" data-filter-type="ctf">CTF</span>
+            <span class="filter-option" data-filter-type="event">Event</span>
+            <span class="filter-option" data-filter-type="college">College</span>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Status</span>
+            <span class="filter-option active" data-filter-status="all">All</span>
+            <span class="filter-option" data-filter-status="registered">Registered</span>
+            <span class="filter-option" data-filter-status="attended">Attended</span>
+            <span class="filter-option" data-filter-status="missed">Missed</span>
+          </div>
+          <div class="filter-group" id="date-filter-group" style="display: none;">
+            <span class="filter-label">Date</span>
+            <span class="filter-option active" id="date-filter-value">Selected Date</span>
+            <span class="filter-option" id="clear-date-filter" style="color: #555555;">X Clear</span>
+          </div>
+        </div>
+
+        <!-- EVENT LIST -->
+        <div class="list-container" id="event-list-container">
+
+          <!-- Dynamic events will render here -->
+
+          <div class="empty-state" id="empty-state">
+            No events yet
+          </div>
+
+        </div>
+
+        <!-- EVENT FORM -->
+        <div class="form-container" id="event-form-container" style="display: none;">
+
+          <form id="event-form" class="sutra-form">
+
+            <div class="form-group">
+              <label for="event-title">Title</label>
+              <input type="text" id="event-title" required />
+            </div>
+
+            <div class="form-group">
+              <label for="event-type">Type</label>
+              <select id="event-type">
+                <option value="hackathon">Hackathon</option>
+                <option value="ctf">CTF</option>
+                <option value="event">Event</option>
+                <option value="college">College</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="event-status">Status</label>
+              <select id="event-status">
+                <option value="registered">Registered</option>
+                <option value="attended">Attended</option>
+                <option value="missed">Missed</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="event-date">Date</label>
+              <input type="date" id="event-date" required />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-btn" id="submit-btn">Add Event</button>
+              <span class="form-feedback" id="form-feedback"></span>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- CALENDAR -->
+        <div id="calendar-container" style="display: none;">
+          <div class="calendar-header">
+            <div class="calendar-month">Month</div>
+            <div>
+              <span class="nav-prev">Prev</span>
+              <span class="nav-next">Next</span>
+            </div>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="calendar-day-labels">
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+              <div>Sun</div>
+            </div>
+
+            <div id="calendar-cells" class="calendar-cells"></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  <div id="cal-tooltip" class="cal-tooltip"></div>
+
+  <!-- JS -->
+  <script type="module" src="./main.js"></script>
+
+</body>
+
+</html>
