@@ -1,5 +1,69 @@
 import { supabase } from './supabase.js'
 
+// --- AUTH LOGIC ---
+const { data: { session } } = await supabase.auth.getSession();
+if (!session) {
+  window.location.href = 'login.html';
+} else {
+  const userNameEl = document.querySelector('#current-user-name');
+  if (userNameEl && session.user.user_metadata?.full_name) {
+    userNameEl.textContent = `Welcome, ${session.user.user_metadata.full_name}`;
+  } else if (userNameEl && session.user.email) {
+    userNameEl.textContent = `Welcome, ${session.user.email.split('@')[0]}`;
+  }
+}
+
+const signOutBtn = document.querySelector('#sign-out-btn');
+const settingsModal = document.querySelector('#settings-modal');
+const closeSettings = document.querySelector('#close-settings');
+const modalSignOut = document.querySelector('#modal-sign-out');
+const modalWelcomeName = document.querySelector('#modal-welcome-name');
+
+if (signOutBtn) {
+  signOutBtn.addEventListener('click', async () => {
+    const settingsIcon = signOutBtn.querySelector('.settings-icon');
+    const isIconVisible = settingsIcon && getComputedStyle(settingsIcon).display !== 'none';
+
+    // If the gear icon is visible, we are in mobile/icon mode -> show modal
+    if (isIconVisible) {
+      if (settingsModal) {
+        // Set user name in modal
+        if (session.user.user_metadata?.full_name) {
+          modalWelcomeName.textContent = `Welcome, ${session.user.user_metadata.full_name}`;
+        } else if (session.user.email) {
+          modalWelcomeName.textContent = `Welcome, ${session.user.email.split('@')[0]}`;
+        }
+        settingsModal.classList.add('active');
+      }
+    } else {
+      // Desktop behavior: "Sign Out" text is visible -> direct sign out
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    }
+  });
+}
+
+if (closeSettings) {
+  closeSettings.addEventListener('click', () => {
+    settingsModal.classList.remove('active');
+  });
+}
+
+if (modalSignOut) {
+  modalSignOut.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
+  });
+}
+
+if (settingsModal) {
+  settingsModal.addEventListener('click', (e) => {
+    if (e.target === settingsModal) {
+      settingsModal.classList.remove('active');
+    }
+  });
+}
+
 const form = document.querySelector('#event-form')
 const listContainer = document.querySelector('#event-list-container')
 const emptyState = document.querySelector('#empty-state')
