@@ -1394,6 +1394,8 @@ body {
   }
 
   .filter-group {
+    display: flex;
+    gap: 8px; /* Added gap */
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -1420,8 +1422,16 @@ body {
   .filter-option {
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 8px 14px;
+    font-size: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary) !important; /* Force visibility */
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .filter-option.active {
+    background: var(--text-primary);
+    color: var(--bg-main) !important;
   }
 }
 
