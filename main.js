@@ -236,10 +236,11 @@ function renderEvents(events) {
       ? `${formatDate(ev.date)} — ${formatDate(ev.end_date)}`
       : formatDate(ev.date);
 
+    const winnerBadge = ev.winner ? '<span class="winner-badge">✨</span>' : '';
     row.innerHTML = `
       <div class="event-date">${dateDisplay}</div>
       <div class="event-info">
-        <span class="event-title">${ev.title}</span>
+        <span class="event-title">${winnerBadge}${ev.title}</span>
         <span class="event-type">${ev.type}</span>
       </div>
       <div class="event-status">${capitalize(ev.status)}</div>
@@ -261,6 +262,7 @@ form.addEventListener('submit', async (e) => {
   const status = document.querySelector('#event-status').value
   const date = document.querySelector('#event-date').value
   const endDate = document.querySelector('#event-end-date').value
+  const winner = document.querySelector('#event-winner').checked
 
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -276,6 +278,7 @@ form.addEventListener('submit', async (e) => {
       status, 
       date, 
       end_date: endDate || null,
+      winner: winner,
       user_id: session.user.id 
     }])
     .select()
@@ -400,16 +403,17 @@ function renderCalendar() {
 
       let eventHtml = '<div class="cal-events-container">';
       dayEvents.forEach(ev => {
-        eventHtml += `<div class="cal-event-text" title="${ev.title}">${ev.title}</div>`;
+        const winnerBadge = ev.winner ? '<span class="winner-badge">✨</span>' : '';
+        eventHtml += `<div class="cal-event-text" title="${ev.title}">${winnerBadge}${ev.title}</div>`;
       });
       eventHtml += '</div>';
 
-      const cell = document.createElement('div');
-      const tooltip = document.getElementById('cal-tooltip');
+      const hasWinner = dayEvents.some(ev => ev.winner);
+      const dayWinnerBadge = hasWinner ? '<span class="winner-icon">✨</span>' : '';
 
       cell.className = `cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''} ${isHoliday ? 'holiday' : ''}`;
       cell.innerHTML = `
-        <div class="cal-date">${i}</div>
+        <div class="cal-date">${i}${dayWinnerBadge}</div>
         ${eventHtml}
       `;
 
@@ -451,20 +455,26 @@ function renderCalendar() {
 
       cell.addEventListener('click', () => {
         tooltip.style.display = 'none';
-      currentFilters.date = cellDateStr;
-      if (dateFilterValue) dateFilterValue.textContent = formatDate(cellDateStr);
-      if (dateFilterGroup) dateFilterGroup.style.display = 'flex';
-
-      // Auto switch to Events tab
-      document.querySelectorAll('.nav-item').forEach(n => {
-        if (n.textContent.trim() === 'Events') {
-          n.click();
+        
+        if (dayEvents.length > 0) {
+          openEventDetails(dayEvents[0]);
+          return;
         }
-      });
 
-      applyFiltersAndRender();
-      renderCalendar(); // To update selected highlight
-    });
+        currentFilters.date = cellDateStr;
+        if (dateFilterValue) dateFilterValue.textContent = formatDate(cellDateStr);
+        if (dateFilterGroup) dateFilterGroup.style.display = 'flex';
+
+        // Auto switch to Events tab
+        document.querySelectorAll('.nav-item').forEach(n => {
+          if (n.textContent.trim() === 'Events') {
+            n.click();
+          }
+        });
+
+        applyFiltersAndRender();
+        renderCalendar(); // To update selected highlight
+      });
 
     calendarCells.appendChild(cell);
   }
@@ -504,3 +514,35 @@ function capitalize(str) {
 
 // --- INIT ---
 loadEvents()
+// --- EVENT DETAILS MODAL ---
+function openEventDetails(event) {
+  const modal = document.getElementById('event-details-modal');
+  if (!modal) return;
+
+  document.getElementById('detail-title').textContent = event.title;
+  document.getElementById('detail-type').textContent = capitalize(event.type);
+  document.getElementById('detail-status').textContent = capitalize(event.status);
+  
+  const dateStr = event.end_date 
+    ? `${formatDate(event.date)} — ${formatDate(event.end_date)}`
+    : formatDate(event.date);
+  document.getElementById('detail-date').textContent = dateStr;
+
+  const winnerBadge = document.getElementById('detail-winner-badge');
+  if (winnerBadge) {
+    winnerBadge.style.display = event.winner ? 'block' : 'none';
+  }
+
+  modal.style.display = 'flex';
+}
+
+document.getElementById('close-details')?.addEventListener('click', () => {
+  document.getElementById('event-details-modal').style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('event-details-modal');
+  if (e.target === modal) {
+    modal.style.display = 'none';
+  }
+});

@@ -145,6 +145,11 @@
               </select>
             </div>
 
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="event-winner" />
+              <label for="event-winner">Won this event? ✨</label>
+            </div>
+
             <div class="form-group-row">
               <div class="form-group">
                 <label for="event-date">Start Date</label>
@@ -216,3 +221,29 @@
 </body>
 
 </html>
+  <!-- EVENT DETAILS MODAL -->
+  <div id="event-details-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="detail-title">Event Title</h2>
+        <span id="close-details" class="close-icon">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="detail-row">
+          <span class="detail-label">Type:</span>
+          <span id="detail-type" class="detail-badge">Hackathon</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Status:</span>
+          <span id="detail-status" class="detail-badge">Attended</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Date:</span>
+          <span id="detail-date">01 Jan 2026</span>
+        </div>
+        <div id="detail-winner-badge" class="winner-announcement" style="display: none;">
+          <span class="sparkle">✨</span> You won this event! <span class="sparkle">✨</span>
+        </div>
+      </div>
+    </div>
+  </div>
