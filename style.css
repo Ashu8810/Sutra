@@ -1412,26 +1412,33 @@ body {
     position: sticky;
     left: 0;
     background: var(--surface-card);
-    padding-right: 12px;
+    padding: 0 16px 0 0;
     z-index: 2;
-    min-width: fit-content;
+    min-width: 80px;
     font-size: 10px;
-    letter-spacing: 0.1em;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
   }
 
   .filter-option {
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 8px 14px;
+    padding: 10px 16px;
     font-size: 11px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary) !important; /* Force visibility */
-    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    transition: all 0.2s ease;
   }
 
   .filter-option.active {
     background: var(--text-primary);
     color: var(--bg-main) !important;
+    font-weight: 700;
+    min-width: 44px;
+    text-align: center;
   }
 }
 
