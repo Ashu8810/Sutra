@@ -65,13 +65,30 @@ body {
 .brand {
   padding: 24px 24px;
   margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .brand h1 {
+  font-family: 'Unbounded', sans-serif;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: 0.5px;
+  letter-spacing: -1px;
+}
+
+.logo-cursor {
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-muted);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* Navigation Section */
@@ -211,9 +228,9 @@ body {
 }
 
 /* Responsive Collapse (Optional) */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .sidebar {
-    width: 72px;
+    width: 80px;
   }
 
   .brand {
@@ -221,22 +238,20 @@ body {
     text-align: center;
   }
 
-  .brand h1 {
-    font-size: 18px;
-    letter-spacing: normal;
-  }
-
-  /* Show only first letter for brand when collapsed */
-  .brand h1::before {
-    content: "S";
+  .logo-cursor {
+    display: none;
   }
 
   .brand h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 24px;
+    letter-spacing: -1px;
     visibility: hidden;
     position: relative;
   }
 
   .brand h1::before {
+    content: "S";
     visibility: visible;
     position: absolute;
     left: 0;
@@ -245,41 +260,37 @@ body {
   }
 
   .nav-item {
-    padding: 8px 0;
-    text-align: center;
+    padding: 16px 0;
+    justify-content: center;
+    border-left: none;
   }
 
-  /* Show only short letter of nav items */
-  .nav-item::before {
-    content: attr(data-short);
-    font-size: 14px;
+  .nav-text {
+    display: none;
   }
 
-  .nav-item {
-    font-size: 0;
+  .nav-item svg {
+    display: block;
+    margin: 0 auto;
   }
 
   .footer {
     padding: 24px 0;
-    text-align: center;
+    align-items: center;
   }
 
-  .footer div {
-    font-size: 0;
+  .footer .user-name, 
+  .footer .sign-out-text {
+    display: none;
   }
 
-  .footer div::before {
-    content: attr(data-short);
-    font-size: 13px;
+  .settings-icon {
+    display: block;
+    margin: 0 auto;
   }
 
   .content {
-    margin-left: 72px;
-    padding: 0 24px 24px 24px;
-  }
-
-  .content-header {
-    padding-top: 24px;
+    margin-left: 80px;
   }
 }
 
@@ -825,10 +836,14 @@ body {
 }
 
 .landing-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Unbounded', sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: 1px;
+  letter-spacing: -1px;
 }
 
 .landing-links {
@@ -1079,11 +1094,20 @@ body {
     left: 16px;
     padding: 0;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .brand h1 {
     visibility: visible;
     position: static;
-    font-size: 20px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .logo-cursor {
+    display: block;
+    font-size: 18px;
   }
   .brand h1::before {
     display: none; /* Remove the "S" icon fallback */
