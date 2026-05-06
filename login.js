@@ -1,4 +1,5 @@
 import { supabase } from './supabase.js';
+import { showToast } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const googleLoginBtn = document.getElementById('google-login-btn');
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (error) throw error;
       } catch (error) {
         console.error('Error logging in with Google:', error.message);
-        alert('Failed to login with Google: ' + error.message);
+        showToast('Login failed: ' + error.message, 'error');
       }
     });
   }
@@ -47,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'dashboard.html';
       } catch (error) {
         console.error('Error logging in:', error.message);
-        alert('Login failed: ' + error.message);
+        showToast('Login failed: ' + error.message, 'error');
       }
     });
   }

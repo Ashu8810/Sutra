@@ -1,4 +1,5 @@
 import { supabase } from './supabase.js'
+import { showToast } from './utils.js'
 
 // --- AUTH LOGIC ---
 const { data: { session } } = await supabase.auth.getSession();
@@ -153,7 +154,7 @@ async function loadEvents() {
 
   if (error) {
     console.error(error)
-    if (formFeedback) formFeedback.textContent = 'Error loading data.';
+    showToast('Error loading data: ' + error.message, 'error');
     return
   }
 
@@ -281,7 +282,7 @@ form.addEventListener('submit', async (e) => {
 
   if (error) {
     console.error(error)
-    if (formFeedback) formFeedback.textContent = 'Error saving event.';
+    showToast('Error saving: ' + error.message, 'error');
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Add Event';
@@ -294,7 +295,7 @@ form.addEventListener('submit', async (e) => {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Add Event';
   }
-  if (formFeedback) formFeedback.textContent = 'Saved.';
+  showToast('Event saved successfully!', 'success');
 
   setTimeout(() => { if (formFeedback) formFeedback.textContent = '' }, 2000);
 
@@ -319,9 +320,11 @@ async function deleteEvent(id) {
 
   if (error) {
     console.error(error);
-    if (formFeedback) formFeedback.textContent = 'Error deleting.';
+    showToast('Error deleting: ' + error.message, 'error');
     return;
   }
+
+  showToast('Event deleted', 'info');
 
   if (formFeedback) formFeedback.textContent = '';
   allEvents = allEvents.filter(e => e.id !== id);

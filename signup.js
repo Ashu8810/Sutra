@@ -1,4 +1,5 @@
 import { supabase } from './supabase.js';
+import { showToast } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const googleSignupBtn = document.getElementById('google-signup-btn');
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (error) throw error;
       } catch (error) {
         console.error('Error signing up with Google:', error.message);
-        alert('Failed to sign up with Google: ' + error.message);
+        showToast('Signup failed: ' + error.message, 'error');
       }
     });
   }
@@ -51,11 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Successfully signed up
-        alert('Account created successfully! You can now log in.');
-        window.location.href = 'login.html';
+        showToast('Account created! Redirecting to login...', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 2000);
       } catch (error) {
         console.error('Error signing up:', error.message);
-        alert('Signup failed: ' + error.message);
+        showToast('Signup failed: ' + error.message, 'error');
       }
     });
   }
