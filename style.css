@@ -413,10 +413,11 @@ body {
 
 
 .event-date {
-  width: 90px;
-  font-size: 14px;
+  width: 160px; /* Increased from 90px */
+  font-size: 13px;
   color: var(--text-muted);
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .event-info {
