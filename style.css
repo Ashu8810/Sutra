@@ -1423,3 +1423,62 @@ body {
     font-size: 12px;
   }
 }
+
+/* --- MOBILE EVENT ROW OPTIMIZATION --- */
+@media (max-width: 640px) {
+  .event-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 16px;
+    position: relative;
+  }
+
+  .event-date {
+    font-size: 11px;
+    width: 100%;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  .event-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .event-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .event-type {
+    font-size: 10px;
+    background: var(--bg-card);
+    padding: 2px 8px;
+    border: 1px solid var(--border-color);
+  }
+
+  .event-status {
+    width: 100%;
+    text-align: left;
+    font-size: 11px;
+    margin-top: 4px;
+    color: var(--accent-color);
+  }
+
+  .event-delete {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
