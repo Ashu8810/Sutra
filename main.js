@@ -411,6 +411,9 @@ function renderCalendar() {
       const hasWinner = dayEvents.some(ev => ev.winner);
       const dayWinnerBadge = hasWinner ? '<span class="winner-icon">✨</span>' : '';
 
+      const cell = document.createElement('div');
+      const tooltip = document.getElementById('cal-tooltip');
+
       cell.className = `cal-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''} ${isHoliday ? 'holiday' : ''}`;
       cell.innerHTML = `
         <div class="cal-date">${i}${dayWinnerBadge}</div>
