@@ -1345,23 +1345,20 @@ body {
 /* --- CALENDAR NAVIGATION --- */
 .calendar-nav {
   display: flex;
-  gap: 8px;
+  gap: 12px; /* Increased separation */
 }
 
 .cal-nav-btn {
-  background: var(--bg-card);
+  background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Unbounded', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 0;
 }
 
@@ -1369,6 +1366,15 @@ body {
   background: var(--text-primary);
   color: var(--bg-main);
   border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.cal-nav-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.cal-nav-btn:active {
+  transform: translateY(0);
 }
 
 .cal-nav-btn:active {
