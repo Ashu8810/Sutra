@@ -1430,57 +1430,69 @@ body {
   .event-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    padding: 20px 16px;
+    gap: 8px;
+    padding: 24px 20px;
     position: relative;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .event-date {
-    font-size: 11px;
-    width: 100%;
+    font-size: 10px;
+    width: auto;
     margin-bottom: 4px;
-    opacity: 0.7;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
   }
 
   .event-info {
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: 8px;
     width: 100%;
   }
 
   .event-title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
+    line-height: 1.2;
   }
 
   .event-type {
-    font-size: 10px;
-    background: var(--bg-card);
-    padding: 2px 8px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 10px;
     border: 1px solid var(--border-color);
+    margin-top: 2px;
   }
 
   .event-status {
-    width: 100%;
+    width: auto;
     text-align: left;
-    font-size: 11px;
-    margin-top: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 12px;
     color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
   }
 
   .event-delete {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 10px;
-    background: var(--bg-card);
+    top: 20px;
+    right: 20px;
+    padding: 0;
+    background: transparent;
     border: 1px solid var(--border-color);
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 12px;
+    opacity: 0.5;
   }
 }
 
