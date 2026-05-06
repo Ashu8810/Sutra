@@ -1412,14 +1412,15 @@ body {
     position: sticky;
     left: 0;
     background: var(--surface-card);
-    padding: 0 16px 0 0;
+    padding: 0 12px 0 0;
     z-index: 2;
-    min-width: 80px;
+    min-width: 60px; /* Reduced from 80px */
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.15em;
     color: var(--text-muted);
     text-transform: uppercase;
+    pointer-events: none; /* Ensure label doesn't block clicks */
   }
 
   .filter-option {
@@ -1431,6 +1432,9 @@ body {
     background: transparent;
     border: none;
     transition: all 0.2s ease;
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
   }
 
   .filter-option.active {
