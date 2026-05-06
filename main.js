@@ -148,6 +148,7 @@ async function loadEvents() {
   const { data, error } = await supabase
     .from('events')
     .select('*')
+    .eq('user_id', session.user.id)
     .order('date', { ascending: true })
 
   if (error) {
@@ -230,8 +231,12 @@ function renderEvents(events) {
     const row = document.createElement('div')
     row.className = 'event-row'
 
+    const dateDisplay = ev.end_date 
+      ? `${formatDate(ev.date)} — ${formatDate(ev.end_date)}`
+      : formatDate(ev.date);
+
     row.innerHTML = `
-      <div class="event-date">${formatDate(ev.date)}</div>
+      <div class="event-date">${dateDisplay}</div>
       <div class="event-info">
         <span class="event-title">${ev.title}</span>
         <span class="event-type">${ev.type}</span>
@@ -254,6 +259,7 @@ form.addEventListener('submit', async (e) => {
   const type = document.querySelector('#event-type').value
   const status = document.querySelector('#event-status').value
   const date = document.querySelector('#event-date').value
+  const endDate = document.querySelector('#event-end-date').value
 
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -263,7 +269,14 @@ form.addEventListener('submit', async (e) => {
 
   const { data, error } = await supabase
     .from('events')
-    .insert([{ title, type, status, date }])
+    .insert([{ 
+      title, 
+      type, 
+      status, 
+      date, 
+      end_date: endDate || null,
+      user_id: session.user.id 
+    }])
     .select()
 
   if (error) {
@@ -369,7 +382,12 @@ function renderCalendar() {
     // Current month cells
     for (let i = 1; i <= daysInMonth; i++) {
       const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
-      const dayEvents = allEvents.filter(e => e.date === cellDateStr);
+      const dayEvents = allEvents.filter(e => {
+        if (e.end_date) {
+          return cellDateStr >= e.date && cellDateStr <= e.end_date;
+        }
+        return e.date === cellDateStr;
+      });
 
       const dayOfWeek = new Date(year, month, i).getDay();
       const isHoliday = (dayOfWeek === 0 || dayOfWeek === 6); // 0 = Sunday, 6 = Saturday

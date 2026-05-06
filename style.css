@@ -1240,3 +1240,12 @@ body {
   background-color: #ef4444;
   color: white;
 }
+
+.form-group-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group-row .form-group {
+  flex: 1;
+}
