@@ -479,12 +479,12 @@ function renderCalendar() {
   }
 }
 
-document.querySelector('.nav-prev')?.addEventListener('click', () => {
+document.querySelector('.prev-btn')?.addEventListener('click', () => {
   currentMonthDate.setMonth(currentMonthDate.getMonth() - 1);
   renderCalendar();
 });
 
-document.querySelector('.nav-next')?.addEventListener('click', () => {
+document.querySelector('.next-btn')?.addEventListener('click', () => {
   currentMonthDate.setMonth(currentMonthDate.getMonth() + 1);
   renderCalendar();
 });

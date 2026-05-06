@@ -1,12 +1,19 @@
 import { supabase } from './supabase.js';
 import { showToast } from './utils.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const googleSignupBtn = document.getElementById('google-signup-btn');
   const signupForm = document.getElementById('signup-form');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
+
+  // Redirect if already logged in
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    window.location.href = 'dashboard.html';
+    return;
+  }
 
   // Handle Google OAuth Signup
   if (googleSignupBtn) {

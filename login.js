@@ -1,11 +1,25 @@
 import { supabase } from './supabase.js';
 import { showToast } from './utils.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const googleLoginBtn = document.getElementById('google-login-btn');
   const loginForm = document.getElementById('login-form');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
+
+  // Check if user is already logged in
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    window.location.href = 'dashboard.html';
+    return;
+  }
+
+  // Listen for auth state changes (crucial for OAuth redirect)
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+      window.location.href = 'dashboard.html';
+    }
+  });
 
   // Handle Google OAuth Login
   if (googleLoginBtn) {
